@@ -36,7 +36,7 @@ lerna-debug.log*
 
 
 # Envoirment
-.develop.env
+.env
 
 # Docker
 docker-compose.yml

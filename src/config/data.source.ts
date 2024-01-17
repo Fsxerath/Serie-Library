@@ -4,10 +4,9 @@ import { Serie } from 'src/series/entities/serie.entity';
 import { Typeserie } from 'src/series/entities/typeserie.entity';
 import { User } from 'src/users/entities/user.entity';
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 ConfigModule.forRoot({
-  envFilePath: `.${process.env.NODE_ENV}.env`,
+  envFilePath: '.env',
 });
 
 const configServices = new ConfigService();
@@ -20,11 +19,8 @@ export const DataSourceConfig: DataSourceOptions = {
   password: configServices.get('DB_PASSWORD'),
   database: configServices.get('DB_NAME'),
   entities: [User, Serie, Progress, Typeserie],
-  migrations: [],
-  synchronize: false,
-  migrationsRun: true,
+  synchronize: true,
   logging: false,
-  namingStrategy: new SnakeNamingStrategy(),
 };
 
 export const appDS = new DataSource(DataSourceConfig);
