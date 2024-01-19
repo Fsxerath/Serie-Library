@@ -8,11 +8,11 @@ import {
 export class Progress {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
-  chapter: string;
-  @Column()
-  season: string;
-  @Column()
+  @Column({ type: 'int' })
+  chapter: number;
+  @Column({ type: 'int' })
+  season: number;
+  @Column({ type: 'text' })
   resume: string;
   @CreateDateColumn()
   dateCreated: string;
