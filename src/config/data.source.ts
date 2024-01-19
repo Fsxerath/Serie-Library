@@ -1,12 +1,12 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Progress } from 'src/progress/entities/progress.entity';
 import { Serie } from 'src/series/entities/serie.entity';
-import { Typeserie } from 'src/series/entities/typeserie.entity';
+import { Typeserie } from 'src/types-serie/entities/typeSerie.entity';
 import { User } from 'src/users/entities/user.entity';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 ConfigModule.forRoot({
-  envFilePath: '.env',
+  envFilePath: process.env.NODE_ENV,
 });
 
 const configServices = new ConfigService();

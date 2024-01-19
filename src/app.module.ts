@@ -7,17 +7,18 @@ import { ProgressModule } from './progress/progress.module';
 import { DataSourceConfig } from './config/data.source';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-//TODO: FIX THE CONFIG MODULE
+import { TypeSerieModule } from './types-serie/types-serie.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: process.env.NODE_ENV || '.env',
+      envFilePath: process.env.NODE_ENV,
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({ ...DataSourceConfig }),
     UsersModule,
     SeriesModule,
     ProgressModule,
+    TypeSerieModule,
   ],
   controllers: [AppController],
   providers: [AppService],
