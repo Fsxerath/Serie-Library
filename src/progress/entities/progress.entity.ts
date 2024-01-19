@@ -1,9 +1,11 @@
 import {
   Column,
   CreateDateColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
 
 export class Progress {
   @PrimaryGeneratedColumn()
@@ -18,5 +20,6 @@ export class Progress {
   dateCreated: Date;
   @UpdateDateColumn()
   dateUpdate: Date;
-  user_id: number;
+  @ManyToOne(() => User, (user) => user.progress)
+  user: User;
 }

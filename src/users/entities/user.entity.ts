@@ -1,5 +1,5 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Progress } from 'src/progress/entities/progress.entity';
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -9,4 +9,6 @@ export class User {
   username: string;
   @Column({ length: 256 })
   password: string;
+  @OneToMany(() => Progress, (progress) => progress.user)
+  progress: Progress[];
 }
