@@ -1,6 +1,6 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Progress } from 'src/progress/entities/progress.entity';
-import { Serie } from 'src/series/entities/serie.entity';
+import { Series } from 'src/series/entities/series.entity';
 import { Typeserie } from 'src/types-serie/entities/typeSerie.entity';
 import { User } from 'src/users/entities/user.entity';
 import { DataSource, DataSourceOptions } from 'typeorm';
@@ -18,7 +18,7 @@ export const DataSourceConfig: DataSourceOptions = {
   username: configServices.get('DB_USER'),
   password: configServices.get('DB_PASSWORD'),
   database: configServices.get('DB_NAME'),
-  entities: [User, Serie, Progress, Typeserie],
+  entities: [User, Series, Progress, Typeserie],
   synchronize: true,
   logging: false,
 };

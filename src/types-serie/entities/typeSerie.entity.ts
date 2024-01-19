@@ -1,1 +1,4 @@
-export class Typeserie {}
+export class Typeserie {
+  id: number;
+  type: string;
+}
