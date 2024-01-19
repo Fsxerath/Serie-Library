@@ -15,8 +15,8 @@ export class Progress {
   @Column({ type: 'text' })
   resume: string;
   @CreateDateColumn()
-  dateCreated: string;
+  dateCreated: Date;
   @UpdateDateColumn()
-  dateUpdate: string;
+  dateUpdate: Date;
   user_id: number;
 }
