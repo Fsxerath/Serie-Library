@@ -1,4 +1,5 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Progress } from 'src/progress/entities/progress.entity';
 
 export class Series {
   @PrimaryGeneratedColumn()
@@ -13,4 +14,7 @@ export class Series {
   totalChapters: number;
   @Column({ type: 'int' })
   totalSeasons: number;
+  @OneToOne(() => Progress)
+  @JoinColumn()
+  progress: Progress;
 }
