@@ -1,5 +1,7 @@
-import { Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Series } from 'src/series/entities/series.entity';
+
+@Entity('typeserie')
 export class Typeserie {
   @PrimaryGeneratedColumn()
   id: number;

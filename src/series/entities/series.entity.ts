@@ -1,5 +1,6 @@
 import {
   Column,
+  Entity,
   JoinColumn,
   ManyToOne,
   OneToOne,
@@ -8,6 +9,7 @@ import {
 import { Progress } from 'src/progress/entities/progress.entity';
 import { Typeserie } from 'src/types-serie/entities/typeSerie.entity';
 
+@Entity('series')
 export class Series {
   @PrimaryGeneratedColumn()
   id: number;

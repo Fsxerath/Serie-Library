@@ -1,5 +1,6 @@
-import { Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Progress } from 'src/progress/entities/progress.entity';
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
