@@ -7,6 +7,8 @@ export class Typeserie {
   id: number;
   @Column({ length: 100 })
   type: string;
+  @Column({ length: 250 })
+  description: string;
   @OneToMany(() => Series, (series) => series.type)
   series: Series[];
 }

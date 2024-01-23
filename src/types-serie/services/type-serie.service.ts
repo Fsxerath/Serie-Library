@@ -18,4 +18,21 @@ export class TypeSerieService {
   async createTypeSerie(series: CreateTypeSerieDto): Promise<Typeserie> {
     return await this.typeSerieRepository.save(series);
   }
+  async getOneTypeSerie(id: number): Promise<Typeserie> {
+    return await this.typeSerieRepository.findOneOrFail({
+      where: { id },
+    });
+  }
+  async updateTypeSerie(
+    id: number,
+    updateTypeSerie: Partial<CreateTypeSerieDto>,
+  ) {
+    const series = await this.getOneTypeSerie(id);
+    const updatedSeries = Object.assign(series, updateTypeSerie);
+    const saveTypeSeries = await this.typeSerieRepository.save(updatedSeries);
+    if (!saveTypeSeries) {
+      throw new Error('Error updating type series');
+    }
+    return saveTypeSeries;
+  }
 }
