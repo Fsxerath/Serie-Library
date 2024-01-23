@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { SeriesModule } from './series/series.module';
 import { ProgressModule } from './progress/progress.module';
@@ -21,6 +20,6 @@ import { TypeSerieModule } from './types-serie/types-serie.module';
     TypeSerieModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}
