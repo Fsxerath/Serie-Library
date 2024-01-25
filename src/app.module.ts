@@ -7,6 +7,7 @@ import { DataSourceConfig } from './config/data.source';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeSerieModule } from './types-serie/types-serie.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -18,6 +19,7 @@ import { TypeSerieModule } from './types-serie/types-serie.module';
     SeriesModule,
     ProgressModule,
     TypeSerieModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [],
