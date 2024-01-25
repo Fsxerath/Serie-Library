@@ -8,7 +8,7 @@ export class User {
   email: string;
   @Column({ length: 50 })
   username: string;
-  @Column({ length: 256 })
+  @Column({ length: 50 })
   password: string;
   @OneToMany(() => Progress, (progress) => progress.user)
   progress: Progress[];
