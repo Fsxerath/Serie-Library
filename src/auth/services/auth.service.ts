@@ -1,13 +1,37 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from 'src/users/services/users.service';
+import { RegisterDto } from '../dtos/register.dto';
+import { hash } from 'bcrypt';
+import { LoginDto } from '../dtos/login.dto';
 
 @Injectable()
 export class AuthService {
   constructor(private readonly UserServices: UsersService) {}
-  login() {
-    return 'Login';
+  async login(userLogin: LoginDto): Promise<LoginDto> {
+    const user = await this.UserServices.findOneByEmail(userLogin.email);
+    if (
+      user.email !== userLogin.email &&
+      user.password !== userLogin.password
+    ) {
+      throw new UnauthorizedException('invalid credentials');
+    }
+    return userLogin;
   }
-  register() {
-    return 'Registro';
+
+  async register(userRegister: RegisterDto): Promise<RegisterDto> {
+    const emailExists = await this.UserServices.findOneByEmail(
+      userRegister.email,
+    );
+    if (emailExists) {
+      throw new UnauthorizedException('email already used');
+    }
+    const nameExists = await this.UserServices.findOneByUsername(
+      userRegister.username,
+    );
+    if (nameExists) {
+      throw new UnauthorizedException('username already used');
+    }
+    userRegister.password = await hash(userRegister.password, 10);
+    return await this.UserServices.createUser(userRegister);
   }
 }
