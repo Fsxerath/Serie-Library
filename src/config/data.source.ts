@@ -22,5 +22,5 @@ export const DataSourceConfig: DataSourceOptions = {
   synchronize: true,
   logging: false,
 };
-
+export const secret = configServices.get('JWT_SECRET');
 export const appDS = new DataSource(DataSourceConfig);
