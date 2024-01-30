@@ -1,21 +1,23 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from 'src/users/services/users.service';
 import { RegisterDto } from '../dtos/register.dto';
-import { hash } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
+import { User } from 'src/users/entities/user.entity';
 import { LoginDto } from '../dtos/login.dto';
 
 @Injectable()
 export class AuthService {
   constructor(private readonly UserServices: UsersService) {}
-  async login(userLogin: LoginDto): Promise<LoginDto> {
+  async login(userLogin: LoginDto): Promise<User> {
     const user = await this.UserServices.findOneByEmail(userLogin.email);
-    if (
-      user.email !== userLogin.email &&
-      user.password !== userLogin.password
-    ) {
-      throw new UnauthorizedException('invalid credentials');
+    if (!user) {
+      throw new UnauthorizedException('email not found');
     }
-    return userLogin;
+    const isPasswordMatch = await compare(userLogin.password, user.password);
+    if (!isPasswordMatch) {
+      throw new UnauthorizedException('wrong password');
+    }
+    return user;
   }
 
   async register(userRegister: RegisterDto): Promise<RegisterDto> {
