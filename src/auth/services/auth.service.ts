@@ -4,6 +4,7 @@ import { RegisterDto } from '../dtos/register.dto';
 import { compare, hash } from 'bcrypt';
 import { LoginDto } from '../dtos/login.dto';
 import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -20,28 +21,32 @@ export class AuthService {
     if (!isPasswordMatch) {
       throw new UnauthorizedException('wrong password');
     }
-    const payload = { email: user.email, sub: user.id };
-    const token = await this.jwtService.signAsync(payload);
     return {
-      access_token: token,
+      access_token: this.getJwtToken(user),
       email: user.email,
     };
   }
 
-  async register(userRegister: RegisterDto): Promise<RegisterDto> {
+  async register(userRegister: RegisterDto) {
     const emailExists = await this.UserServices.findOneByEmail(
       userRegister.email,
     );
-    if (emailExists) {
-      throw new UnauthorizedException('email already used');
-    }
+    if (emailExists) throw new UnauthorizedException('email already used');
+
     const nameExists = await this.UserServices.findOneByUsername(
       userRegister.username,
     );
-    if (nameExists) {
-      throw new UnauthorizedException('username already used');
-    }
+    if (nameExists) throw new UnauthorizedException('username already used');
+
     userRegister.password = await hash(userRegister.password, 10);
-    return await this.UserServices.createUser(userRegister);
+    const saveUser = await this.UserServices.createUser(userRegister);
+    return {
+      ...saveUser,
+      access_token: this.getJwtToken(saveUser),
+    };
+  }
+  private getJwtToken(user: User) {
+    const payload = { email: user.email, sub: user.id };
+    return this.jwtService.sign(payload);
   }
 }
