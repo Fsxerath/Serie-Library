@@ -4,7 +4,7 @@ import { RegisterDto } from '../dtos/register.dto';
 import { compare, hash } from 'bcrypt';
 import { LoginDto } from '../dtos/login.dto';
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/users/entities/user.entity';
+import { JwtPayload } from '../interfaces/jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -14,16 +14,16 @@ export class AuthService {
   ) {}
   async login(userLogin: LoginDto) {
     const user = await this.UserServices.findOneByEmail(userLogin.email);
-    if (!user) {
-      throw new UnauthorizedException('email not found');
-    }
+
+    if (!user) throw new UnauthorizedException('email not found');
+
     const isPasswordMatch = await compare(userLogin.password, user.password);
-    if (!isPasswordMatch) {
-      throw new UnauthorizedException('wrong password');
-    }
+
+    if (!isPasswordMatch) throw new UnauthorizedException('wrong password');
+
     return {
-      access_token: this.getJwtToken(user),
-      email: user.email,
+      ...user,
+      access_token: this.getJwtToken({ email: user.email }),
     };
   }
 
@@ -45,8 +45,7 @@ export class AuthService {
       access_token: this.getJwtToken(saveUser),
     };
   }
-  private getJwtToken(user: User) {
-    const payload = { email: user.email, sub: user.id };
+  private getJwtToken(payload: JwtPayload) {
     return this.jwtService.sign(payload);
   }
 }
