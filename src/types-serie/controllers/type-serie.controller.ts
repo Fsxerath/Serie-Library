@@ -18,7 +18,7 @@ export class TypeSerieController {
   updateType(
     @Req() req: Request,
     @Body() updatedTypeSeries: Partial<UpdateTypeSerieDto>,
-    @Param('id') id: number,
+    @Param('id') id: string,
   ) {
     return this.typeSerieService.updateTypeSerie(id, updatedTypeSeries);
   }

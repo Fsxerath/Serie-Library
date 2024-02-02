@@ -10,8 +10,8 @@ import { User } from 'src/users/entities/user.entity';
 
 @Entity('progress')
 export class Progress {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
   @Column({ type: 'int' })
   chapter: number;
   @Column({ type: 'int' })

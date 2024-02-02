@@ -11,8 +11,8 @@ import { Typeserie } from 'src/types-serie/entities/typeSerie.entity';
 
 @Entity('series')
 export class Series {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
   @Column({ length: 256 })
   title: string;
   @Column({ type: 'text' })
