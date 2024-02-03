@@ -1,5 +1,4 @@
 import { PassportStrategy } from '@nestjs/passport';
-import { User } from 'src/users/entities/user.entity';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
 import { ConfigService } from '@nestjs/config';
 import { ExtractJwt, Strategy } from 'passport-jwt';
@@ -17,13 +16,17 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     });
   }
-  async validate(payload: JwtPayload): Promise<User> {
-    const { email } = payload;
+  async validate(payload: JwtPayload) {
+    const { id } = payload;
 
-    const user = await this.userRepository.findOneByEmail(email);
+    const user = await this.userRepository.findOneById(id);
 
     if (!user) throw new UnauthorizedException('token not valid');
 
-    return user;
+    return {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    };
   }
 }
