@@ -14,7 +14,6 @@ export class CreateSeriesDto {
   synopsis;
   @IsDate()
   publicationDate;
-
   @IsNumber()
   @IsPositive()
   @IsNotEmpty()
