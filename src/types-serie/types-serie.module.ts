@@ -8,5 +8,6 @@ import { Typeserie } from './entities/typeSerie.entity';
   imports: [TypeOrmModule.forFeature([Typeserie])],
   controllers: [TypeSerieController],
   providers: [TypeSerieService],
+  exports: [TypeSerieService],
 })
 export class TypeSerieModule {}

@@ -1,13 +1,36 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { SeriesService } from '../services/series.service';
-import { AuthGuard } from '@nestjs/passport';
+import { CreateSeriesDto } from '../dtos/createSeries.dto';
+import { UpdateSeriesDto } from '../dtos/updateSeries.dto';
 
 @Controller('series')
 export class SeriesController {
   constructor(private readonly seriesService: SeriesService) {}
   @Get()
-  @UseGuards(AuthGuard())
-  async getAllSeries() {
-    return await this.seriesService.getAllSeries();
+  getAllSeries() {
+    return this.seriesService.getAllSeries();
+  }
+  @Post()
+  createSeries(@Body() series: CreateSeriesDto) {
+    return this.seriesService.createSeries(series);
+  }
+  @Patch('/:id')
+  updateSeries(
+    @Body() updatedSeries: Partial<UpdateSeriesDto>,
+    @Param('id') id: string,
+  ) {
+    return this.seriesService.updateSeries(id, updatedSeries);
+  }
+  @Delete('/:id')
+  deleteSeries(@Param('id') id: string) {
+    return this.seriesService.deleteSeries(id);
   }
 }

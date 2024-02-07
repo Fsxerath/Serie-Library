@@ -18,13 +18,13 @@ export class TypeSerieService {
   async createTypeSerie(series: CreateTypeSerieDto): Promise<Typeserie> {
     return await this.typeSerieRepository.save(series);
   }
-  async getOneTypeSerie(id: string): Promise<Typeserie> {
+  async getOneTypeSerie(id: number): Promise<Typeserie> {
     return await this.typeSerieRepository.findOneOrFail({
       where: { id },
     });
   }
   async updateTypeSerie(
-    id: string,
+    id: number,
     updateTypeSerie: Partial<CreateTypeSerieDto>,
   ) {
     const series = await this.getOneTypeSerie(id);

@@ -3,8 +3,8 @@ import { Series } from 'src/series/entities/series.entity';
 
 @Entity('typeserie')
 export class Typeserie {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
   @Column({ length: 100 })
   type: string;
   @Column({ length: 250 })
