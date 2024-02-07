@@ -1,5 +1,5 @@
 import {
-  IsDate,
+  IsISO8601,
   IsNotEmpty,
   IsNumber,
   IsPositive,
@@ -12,7 +12,7 @@ export class CreateSeriesDto {
   title;
   @IsString()
   synopsis;
-  @IsDate()
+  @IsISO8601()
   publicationDate;
   @IsNumber()
   @IsPositive()

@@ -42,8 +42,9 @@ export class ProgressService {
   async updateProgress(
     id: string,
     progress: Partial<Progress>,
+    user: User,
   ): Promise<Progress> {
-    const searchProgress = await this.findOneProgress(id, progress.user);
+    const searchProgress = await this.findOneProgress(id, user);
     const updatedProgress = Object.assign(searchProgress, progress);
     const saveProgress = await this.progressRepository.save(updatedProgress);
     if (!saveProgress) throw new Error('Error updating progress');
