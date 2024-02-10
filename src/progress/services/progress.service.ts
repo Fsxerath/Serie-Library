@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProgressDto } from '../dtos/createProgress.dto';
 import { User } from 'src/users/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,17 +11,9 @@ export class ProgressService {
     @InjectRepository(Progress)
     private readonly progressRepository: Repository<Progress>,
   ) {}
-  async createProgress(
-    createProgressDto: CreateProgressDto,
-    user: User,
-  ): Promise<Progress> {
-    return await this.progressRepository.save({
-      ...createProgressDto,
-      user,
-    });
-  }
+
   async findOneProgress(id: string, user: User): Promise<Progress> {
-    return await this.progressRepository.findOneOrFail({
+    const progressFind = await this.progressRepository.findOne({
       where: {
         id,
         user: {
@@ -29,6 +21,8 @@ export class ProgressService {
         },
       },
     });
+    if (!progressFind) throw new NotFoundException('progress not found');
+    return progressFind;
   }
   async getProgressByUser(user: User): Promise<Progress[]> {
     return await this.progressRepository.find({
@@ -37,6 +31,16 @@ export class ProgressService {
           id: user.id,
         },
       },
+    });
+  }
+  //TODO: Implement the verification if the user have more progress in the same series
+  async createProgress(
+    createProgressDto: CreateProgressDto,
+    user: User,
+  ): Promise<Progress> {
+    return await this.progressRepository.save({
+      ...createProgressDto,
+      user,
     });
   }
   async updateProgress(
