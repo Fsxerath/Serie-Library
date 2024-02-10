@@ -2,9 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -25,8 +23,7 @@ export class Progress {
   dateCreated: Date;
   @UpdateDateColumn()
   dateUpdate: Date;
-  @OneToOne(() => Series)
-  @JoinColumn()
+  @ManyToOne(() => Series, (series) => series.progress)
   series_progress: Series;
   @ManyToOne(() => User, (user) => user.progress)
   user: User;
