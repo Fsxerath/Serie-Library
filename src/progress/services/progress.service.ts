@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateProgressDto } from '../dtos/createProgress.dto';
 import { User } from 'src/users/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -33,11 +37,22 @@ export class ProgressService {
       },
     });
   }
-  //TODO: Implement the verification if the user have more progress in the same series
+  //TODO: Implement the automatic update of relation beetwen progress and series
   async createProgress(
     createProgressDto: CreateProgressDto,
     user: User,
   ): Promise<Progress> {
+    const findSeries = await this.progressRepository.findOne({
+      where: {
+        user: { id: user.id },
+        series_progress: { id: createProgressDto.idSeries },
+      },
+    });
+    if (findSeries) {
+      throw new BadRequestException(
+        'You already have a progress in this series',
+      );
+    }
     return await this.progressRepository.save({
       ...createProgressDto,
       user,

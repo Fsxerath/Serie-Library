@@ -10,5 +10,6 @@ import { TypeSerieModule } from 'src/types-serie/types-serie.module';
   imports: [TypeOrmModule.forFeature([Series]), AuthModule, TypeSerieModule],
   providers: [SeriesService],
   controllers: [SeriesController],
+  exports: [SeriesService],
 })
 export class SeriesModule {}

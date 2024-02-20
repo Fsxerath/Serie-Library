@@ -19,4 +19,7 @@ export class CreateProgressDto {
   @MinLength(10)
   @IsNotEmpty()
   resume;
+  @IsString()
+  @IsNotEmpty()
+  idSeries;
 }
