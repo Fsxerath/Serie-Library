@@ -16,7 +16,7 @@ export class Series {
   totalChapters: number;
   @Column({ type: 'int' })
   totalSeasons: number;
-  @ManyToOne(() => Progress, (progress) => progress.series_progress)
+  @ManyToOne(() => Progress, (progress) => progress.series)
   progress: Progress[];
   @ManyToOne(() => Typeserie, (typeserie) => typeserie.series)
   type: Typeserie;

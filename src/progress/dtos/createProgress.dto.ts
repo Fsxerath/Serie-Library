@@ -21,5 +21,5 @@ export class CreateProgressDto {
   resume;
   @IsString()
   @IsNotEmpty()
-  idSeries;
+  series;
 }
