@@ -9,6 +9,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Progress } from '../entities/progress.entity';
 import { Repository } from 'typeorm';
 import { SeriesService } from 'src/series/services/series.service';
+import { Series } from 'src/series/entities/series.entity';
+import { UpdateProgressDto } from '../dtos/updateProgress.dto';
 
 @Injectable()
 export class ProgressService {
@@ -39,18 +41,15 @@ export class ProgressService {
       },
     });
   }
-  //TODO: FIX THIS METHOD
-  async validateSeriesProgress(
-    user: User,
-    progress: CreateProgressDto,
-  ): Promise<Progress> {
-    const find_series = this.progressRepository.findOne({
-      where: {
-        user: { id: user.id },
-        series: { id: progress.series },
-      },
+  async validateSeriesProgress(user: User, series: Series): Promise<Progress> {
+    const find_series = await this.progressRepository.findOneBy({
+      user: { id: user.id },
+      series: { id: series.id },
     });
-    if (!find_series) return null;
+    if (find_series)
+      throw new BadRequestException(
+        'Do you cant create progress for the same series',
+      );
     return find_series;
   }
   async createProgress(
@@ -60,16 +59,7 @@ export class ProgressService {
     const series = await this.seriesService.findOneByID(
       createProgressDto.series,
     );
-    if (!series) throw new NotFoundException('Series not found');
-    const validateSeriesOfProgress = this.validateSeriesProgress(
-      user,
-      createProgressDto,
-    );
-    console.log(validateSeriesOfProgress);
-    if (validateSeriesOfProgress)
-      throw new BadRequestException(
-        'You already have a progress in this series',
-      );
+    await this.validateSeriesProgress(user, series);
     return await this.progressRepository.save({
       ...createProgressDto,
       user,
@@ -78,11 +68,11 @@ export class ProgressService {
   }
   async updateProgress(
     id: string,
-    progress: Partial<Progress>,
+    updateProgress: Partial<UpdateProgressDto>,
     user: User,
   ): Promise<Progress> {
     const searchProgress = await this.findOneProgress(id, user);
-    const updatedProgress = Object.assign(searchProgress, progress);
+    const updatedProgress = Object.assign(searchProgress, updateProgress);
     const saveProgress = await this.progressRepository.save(updatedProgress);
     if (!saveProgress) throw new Error('Error updating progress');
     return saveProgress;

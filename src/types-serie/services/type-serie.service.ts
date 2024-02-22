@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Typeserie } from '../entities/typeSerie.entity';
 import { Repository } from 'typeorm';
@@ -19,9 +19,11 @@ export class TypeSerieService {
     return await this.typeSerieRepository.save(series);
   }
   async getOneTypeSerie(id: number): Promise<Typeserie> {
-    return await this.typeSerieRepository.findOneOrFail({
+    const type = await this.typeSerieRepository.findOne({
       where: { id },
     });
+    if (!type) throw new NotFoundException('Type series not found');
+    return type;
   }
   async updateTypeSerie(
     id: number,

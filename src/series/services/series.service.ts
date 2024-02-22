@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Series } from '../entities/series.entity';
 import { Repository } from 'typeorm';
@@ -17,9 +17,11 @@ export class SeriesService {
     return await this.seriesRepository.find();
   }
   async findOneByID(id: string): Promise<Series> {
-    return await this.seriesRepository.findOneOrFail({
+    const series = await this.seriesRepository.findOne({
       where: { id },
     });
+    if (!series) throw new NotFoundException('Series not found');
+    return series;
   }
   async createSeries(series: CreateSeriesDto): Promise<Series> {
     return await this.seriesRepository.save(series);
