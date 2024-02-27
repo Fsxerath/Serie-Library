@@ -4,22 +4,26 @@ import {
   IsNumber,
   IsPositive,
   IsString,
+  MinLength,
 } from 'class-validator';
 
 export class CreateSeriesDto {
-  @IsString()
   @IsNotEmpty()
-  title;
   @IsString()
+  @MinLength(2)
+  title;
+  @IsNotEmpty()
+  @IsString()
+  @MinLength(10)
   synopsis;
   @IsISO8601()
   publicationDate;
+  @IsNotEmpty()
   @IsNumber()
   @IsPositive()
-  @IsNotEmpty()
   totalChapters;
+  @IsNotEmpty()
   @IsNumber()
   @IsPositive()
-  @IsNotEmpty()
   totalSeasons;
 }

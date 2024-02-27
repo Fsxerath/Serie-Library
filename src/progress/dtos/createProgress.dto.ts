@@ -7,19 +7,19 @@ import {
 } from 'class-validator';
 
 export class CreateProgressDto {
+  @IsNotEmpty()
   @IsNumber()
   @IsPositive()
-  @IsNotEmpty()
   chapter;
+  @IsNotEmpty()
   @IsNumber()
   @IsPositive()
-  @IsNotEmpty()
   season;
+  @IsNotEmpty()
   @IsString()
   @MinLength(10)
-  @IsNotEmpty()
   resume;
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   series;
 }
