@@ -1,9 +1,20 @@
-import { Body, Controller, Get, Param, Patch, Post, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { TypeSerieService } from '../services/type-serie.service';
 import { CreateTypeSerieDto } from '../dtos/createTypeSerie.dto';
 import { UpdateTypeSerieDto } from '../dtos/updateTypeSerie.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('typeSeries')
+@UseGuards(AuthGuard)
 export class TypeSerieController {
   constructor(private readonly typeSerieService: TypeSerieService) {}
   @Get()
@@ -17,7 +28,7 @@ export class TypeSerieController {
   @Patch('/:id')
   updateType(
     @Req() req: Request,
-    @Body() updatedTypeSeries: Partial<UpdateTypeSerieDto>,
+    @Body() updatedTypeSeries: UpdateTypeSerieDto,
     @Param('id') id: number,
   ) {
     return this.typeSerieService.updateTypeSerie(id, updatedTypeSeries);

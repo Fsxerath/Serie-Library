@@ -1,11 +1,11 @@
-import { IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { IsOptional, IsString, MinLength } from 'class-validator';
 
 export class UpdateTypeSerieDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @MinLength(3)
   type: string;
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @MinLength(5)
   description: string;
