@@ -6,12 +6,15 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { SeriesService } from '../services/series.service';
 import { CreateSeriesDto } from '../dtos/createSeries.dto';
 import { UpdateSeriesDto } from '../dtos/updateSeries.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('series')
+@UseGuards(AuthGuard())
 export class SeriesController {
   constructor(private readonly seriesService: SeriesService) {}
   @Get()

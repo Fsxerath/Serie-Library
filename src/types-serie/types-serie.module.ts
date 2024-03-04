@@ -9,6 +9,5 @@ import { AuthModule } from 'src/auth/auth.module';
   imports: [TypeOrmModule.forFeature([Typeserie]), AuthModule],
   controllers: [TypeSerieController],
   providers: [TypeSerieService],
-  exports: [TypeSerieService],
 })
 export class TypeSerieModule {}

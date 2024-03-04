@@ -4,14 +4,12 @@ import { Series } from '../entities/series.entity';
 import { Repository } from 'typeorm';
 import { CreateSeriesDto } from '../dtos/createSeries.dto';
 import { UpdateSeriesDto } from '../dtos/updateSeries.dto';
-import { TypeSerieService } from 'src/types-serie/services/type-serie.service';
 
 @Injectable()
 export class SeriesService {
   constructor(
     @InjectRepository(Series)
     private readonly seriesRepository: Repository<Series>,
-    private readonly typeSerieService: TypeSerieService,
   ) {}
   async getAllSeries(): Promise<Series[]> {
     return await this.seriesRepository.find();
