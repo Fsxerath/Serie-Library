@@ -14,7 +14,7 @@ import { UpdateTypeSerieDto } from '../dtos/updateTypeSerie.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('typeSeries')
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard())
 export class TypeSerieController {
   constructor(private readonly typeSerieService: TypeSerieService) {}
   @Get()

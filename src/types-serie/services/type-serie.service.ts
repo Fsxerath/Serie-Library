@@ -25,10 +25,7 @@ export class TypeSerieService {
     if (!type) throw new NotFoundException('Type series not found');
     return type;
   }
-  async updateTypeSerie(
-    id: number,
-    updateTypeSerie: Partial<CreateTypeSerieDto>,
-  ) {
+  async updateTypeSerie(id: number, updateTypeSerie: CreateTypeSerieDto) {
     const series = await this.getOneTypeSerie(id);
     const updatedSeries = Object.assign(series, updateTypeSerie);
     const saveTypeSeries = await this.typeSerieRepository.save(updatedSeries);
