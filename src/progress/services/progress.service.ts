@@ -68,7 +68,7 @@ export class ProgressService {
   }
   async updateProgress(
     id: string,
-    updateProgress: Partial<UpdateProgressDto>,
+    updateProgress: UpdateProgressDto,
     user: User,
   ): Promise<Progress> {
     const searchProgress = await this.findOneProgress(id, user);

@@ -1,21 +1,21 @@
 import {
-  IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
   MinLength,
 } from 'class-validator';
 
 export class UpdateProgressDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   @IsPositive()
   chapter;
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   @IsPositive()
   season;
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @MinLength(10)
   resume;
