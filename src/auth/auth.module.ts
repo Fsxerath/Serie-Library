@@ -19,7 +19,7 @@ const passportModule = PassportModule.register({ defaultStrategy: 'jwt' });
       useFactory: () => {
         return {
           secret: process.env.SECRET,
-          signOptions: { expiresIn: '1d' },
+          signOptions: { expiresIn: '30d' },
         };
       },
     }),

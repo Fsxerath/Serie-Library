@@ -8,6 +8,9 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeSerieModule } from './types-serie/types-serie.module';
 import { AuthModule } from './auth/auth.module';
+import { ScrapperModule } from './scrapper/scrapper.module';
+import { ScrapperController } from './controllers/scrapper/scrapper.controller';
+import { ScrapperController } from './controllers/scrapper.controller';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,8 +23,9 @@ import { AuthModule } from './auth/auth.module';
     ProgressModule,
     TypeSerieModule,
     AuthModule,
+    ScrapperModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, ScrapperController],
   providers: [],
 })
 export class AppModule {}
