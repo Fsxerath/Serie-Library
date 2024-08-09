@@ -4,7 +4,7 @@ import { WebDto } from '../dtos/web.dto';
 import { ScrapInfoDto } from '../dtos/scrapinfo.dto';
 
 @Injectable()
-export class ScraperService {
+export class SupplierService {
   async scrapTMO(web: WebDto): Promise<ScrapInfoDto> {
     const browser = await puppeteer.launch();
     try {
