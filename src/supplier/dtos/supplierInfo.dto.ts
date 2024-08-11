@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
 
-export class ScrapInfoDto {
+export class SupplierInfoDto {
   @IsString()
   title: string;
   @IsString()
