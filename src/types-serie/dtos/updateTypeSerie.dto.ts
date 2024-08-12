@@ -6,18 +6,20 @@ export class UpdateTypeSerieDto {
   @IsString()
   @MinLength(3)
   @ApiProperty({
-    example: 'manga',
     type: String,
     minLength: 3,
+    description: 'type of series (manga, anime, tv show, etc)',
+    example: 'manga',
   })
   type: string;
   @IsOptional()
   @IsString()
   @MinLength(5)
   @ApiProperty({
-    example: 'medium used to express ideas with images',
     type: String,
     minLength: 5,
+    description: 'brief description of the type of series',
+    example: 'medium used to express ideas with images',
   })
   description: string;
 }
