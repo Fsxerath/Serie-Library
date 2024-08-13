@@ -5,16 +5,18 @@ import {
   Param,
   Patch,
   Post,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { TypeSerieService } from '../services/type-serie.service';
 import { CreateTypeSerieDto } from '../dtos/createTypeSerie.dto';
 import { UpdateTypeSerieDto } from '../dtos/updateTypeSerie.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Controller('typeSeries')
 @UseGuards(AuthGuard())
+@ApiTags('typeSeries')
+@ApiBearerAuth()
 export class TypeSerieController {
   constructor(private readonly typeSerieService: TypeSerieService) {}
   @Get()
@@ -27,9 +29,8 @@ export class TypeSerieController {
   }
   @Patch('/:id')
   updateType(
-    @Req() req: Request,
-    @Body() updatedTypeSeries: UpdateTypeSerieDto,
     @Param('id') id: number,
+    @Body() updatedTypeSeries: UpdateTypeSerieDto,
   ) {
     return this.typeSerieService.updateTypeSerie(id, updatedTypeSeries);
   }

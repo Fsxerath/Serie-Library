@@ -15,7 +15,7 @@ async function bootstrap() {
     .setTitle('Series Library API')
     .setDescription('This API is for managing your favorite series')
     .setVersion('1.0')
-    .addTag('series')
+    .addTag('auth')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

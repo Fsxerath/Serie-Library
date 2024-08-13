@@ -12,9 +12,12 @@ import { SeriesService } from '../services/series.service';
 import { CreateSeriesDto } from '../dtos/createSeries.dto';
 import { UpdateSeriesDto } from '../dtos/updateSeries.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Controller('series')
 @UseGuards(AuthGuard())
+@ApiTags('series')
+@ApiBearerAuth()
 export class SeriesController {
   constructor(private readonly seriesService: SeriesService) {}
   @Get()
@@ -27,8 +30,8 @@ export class SeriesController {
   }
   @Patch('/:id')
   updateSeries(
-    @Body() updatedSeries: Partial<UpdateSeriesDto>,
     @Param('id') id: string,
+    @Body() updatedSeries: UpdateSeriesDto,
   ) {
     return this.seriesService.updateSeries(id, updatedSeries);
   }
