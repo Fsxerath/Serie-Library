@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDate,
-  IsNotEmpty,
   IsNumber,
   IsPositive,
   IsString,
@@ -9,7 +8,6 @@ import {
 } from 'class-validator';
 
 export class UpdateSeriesDto {
-  @IsNotEmpty()
   @IsString()
   @MinLength(2)
   @ApiProperty({
@@ -19,7 +17,6 @@ export class UpdateSeriesDto {
     example: 'Naruto',
   })
   title;
-  @IsNotEmpty()
   @IsString()
   @MinLength(2)
   @ApiProperty({
@@ -36,7 +33,6 @@ export class UpdateSeriesDto {
     example: '2002-09-21',
   })
   publicationDate;
-  @IsNotEmpty()
   @IsNumber()
   @IsPositive()
   @ApiProperty({
@@ -45,7 +41,6 @@ export class UpdateSeriesDto {
     example: 12,
   })
   totalChapters;
-  @IsNotEmpty()
   @IsNumber()
   @IsPositive()
   @ApiProperty({

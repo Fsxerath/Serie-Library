@@ -29,8 +29,8 @@ export class SeriesController {
   }
   @Patch('/:id')
   updateSeries(
-    @Body() updatedSeries: Partial<UpdateSeriesDto>,
     @Param('id') id: string,
+    @Body() updatedSeries: UpdateSeriesDto,
   ) {
     return this.seriesService.updateSeries(id, updatedSeries);
   }
