@@ -19,10 +19,10 @@ export class RequestSupplierDto {
   })
   @IsNotEmpty()
   @ApiProperty({
-    type: Webs,
+    type: String,
     required: true,
     description: 'name of page where the series is located',
-    example: Webs.TMO,
+    example: 'TMO',
   })
   name: string;
 }
