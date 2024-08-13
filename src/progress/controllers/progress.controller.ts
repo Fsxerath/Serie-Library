@@ -14,9 +14,11 @@ import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { User } from 'src/users/entities/user.entity';
 import { UpdateProgressDto } from '../dtos/updateProgress.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('progress')
 @UseGuards(AuthGuard())
+@ApiTags('progress')
 export class ProgressController {
   constructor(private readonly progress_Services: ProgressService) {}
   @Get()
