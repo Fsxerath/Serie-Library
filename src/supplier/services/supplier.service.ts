@@ -20,13 +20,15 @@ export class SupplierService {
       await Promise.all([page.waitForNavigation(), page.goto(url)]);
       const data: SupplierInfoDto = await page.evaluate(() => {
         const info = document.querySelectorAll(
-          '.element-title, .text-muted, .element-description, .btn-collapse',
+          '.book-type, .book-thumbnail, .element-title, .text-muted, .element-description, .btn-collapse',
         );
         return {
-          title: info[0].textContent.split('\n')[1].trim(),
-          date: info[1].textContent,
-          synopsis: info[2].textContent,
-          chapters: info[3].textContent,
+          bookType: info[0].textContent,
+          thumbnail: info[1].getAttribute('src'),
+          title: info[2].textContent.split('\n')[1].trim(),
+          date: info[3].textContent,
+          synopsis: info[4].textContent,
+          chapters: info[5].textContent,
         };
       });
       await browser.close();
