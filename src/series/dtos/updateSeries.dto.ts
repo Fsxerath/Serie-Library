@@ -1,14 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
   IsUrl,
   MinLength,
 } from 'class-validator';
-import { url } from 'inspector';
 
 export class UpdateSeriesDto {
+  @IsOptional()
   @IsString()
   @MinLength(2)
   @ApiProperty({
@@ -18,6 +19,7 @@ export class UpdateSeriesDto {
     example: 'Naruto',
   })
   title;
+  @IsOptional()
   @IsString()
   @MinLength(2)
   @ApiProperty({
@@ -27,6 +29,7 @@ export class UpdateSeriesDto {
     example: 'Naruto is a manga series',
   })
   synopsis;
+  @IsOptional()
   @IsString()
   @ApiProperty({
     type: Date,
@@ -34,6 +37,7 @@ export class UpdateSeriesDto {
     example: '2002-09-21',
   })
   publicationDate;
+  @IsOptional()
   @IsNumber()
   @IsPositive()
   @ApiProperty({
@@ -43,10 +47,15 @@ export class UpdateSeriesDto {
   })
   totalChapters;
   @IsUrl()
+  @IsOptional()
   @ApiProperty({
-    type: url,
+    type: URL,
     description: 'url of series image',
     example: 'https://example.com/image.jpg',
   })
   thumbnail;
+  @IsOptional()
+  @IsNumber()
+  @IsPositive()
+  typeSeries: number;
 }

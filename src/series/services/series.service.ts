@@ -46,6 +46,8 @@ export class SeriesService {
     series: Partial<UpdateSeriesDto>,
   ): Promise<Series> {
     const searchSeries = await this.findOneByID(id);
+    const type = await this.typeService.getOneTypeSerie(series.typeSeries);
+    if (!type) throw new NotFoundException('Type not found');
     const updatedSeries = Object.assign(searchSeries, series);
     const saveSeries = await this.seriesRepository.save(updatedSeries);
     if (!saveSeries) throw new Error('Error updating series');
