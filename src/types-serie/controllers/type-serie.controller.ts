@@ -23,6 +23,10 @@ export class TypeSerieController {
   findAllTypes() {
     return this.typeSerieService.getAllTypeSeries();
   }
+  @Get('/:id')
+  findOneType(@Param('id') id: number) {
+    return this.typeSerieService.getOneTypeSerie(id);
+  }
   @Post()
   createTypesSeries(@Body() series: CreateTypeSerieDto) {
     return this.typeSerieService.createTypeSerie(series);

@@ -10,12 +10,12 @@ export class Series {
   title: string;
   @Column({ type: 'text' })
   synopsis: string;
-  @Column({ type: 'date' })
+  @Column({ length: 12 })
   publicationDate: string;
   @Column({ type: 'int' })
   totalChapters: number;
-  @Column({ type: 'int' })
-  totalSeasons: number;
+  @Column({ type: 'text' })
+  thumbnail: string;
   @ManyToOne(() => Progress, (progress) => progress.series)
   progress: Progress[];
   @ManyToOne(() => Typeserie, (typeserie) => typeserie.series)
