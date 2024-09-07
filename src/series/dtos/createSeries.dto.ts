@@ -18,7 +18,7 @@ export class CreateSeriesDto {
     description: 'title of the series',
     example: 'Naruto',
   })
-  title;
+  title: string;
   @IsNotEmpty()
   @IsString()
   @MinLength(10)
@@ -28,7 +28,7 @@ export class CreateSeriesDto {
     description: 'brief description of the series',
     example: 'Naruto is a manga series',
   })
-  synopsis;
+  synopsis: string;
   @IsString()
   @ApiProperty({
     type: String,
@@ -45,7 +45,7 @@ export class CreateSeriesDto {
     description: 'total chapters of the series',
     example: 12,
   })
-  totalChapters;
+  totalChapters: number;
   @IsNotEmpty()
   @IsUrl()
   @ApiProperty({
@@ -54,7 +54,7 @@ export class CreateSeriesDto {
     description: 'url of series image',
     example: 'https://example.com/image.jpg',
   })
-  thumbnail;
+  thumbnail: string;
   @IsNotEmpty()
   @IsNumber()
   @IsPositive()

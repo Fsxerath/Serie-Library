@@ -17,17 +17,7 @@ export class CreateProgressDto {
     description: 'Your current chapter in the series',
     example: 1,
   })
-  chapter;
-  @IsNotEmpty()
-  @IsNumber()
-  @IsPositive()
-  @ApiProperty({
-    type: Number,
-    required: true,
-    description: 'Your current season in the series',
-    example: 1,
-  })
-  season;
+  chapter: number;
   @IsNotEmpty()
   @IsString()
   @MinLength(10)
@@ -38,7 +28,7 @@ export class CreateProgressDto {
     description: 'Your current progress summary in the series',
     example: 'This series is about...',
   })
-  resume;
+  resume: string;
   @IsNotEmpty()
   @IsString()
   @ApiProperty({
@@ -47,5 +37,5 @@ export class CreateProgressDto {
     description: 'The series you are watching (this is a Primary key)',
     example: 'b52eef23-2a61-4874-9bd6-3b564037a2b3',
   })
-  series;
+  series: string;
 }

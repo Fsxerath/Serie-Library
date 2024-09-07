@@ -15,8 +15,6 @@ export class Progress {
   id: string;
   @Column({ type: 'int' })
   chapter: number;
-  @Column({ type: 'int' })
-  season: number;
   @Column({ type: 'text' })
   resume: string;
   @CreateDateColumn()

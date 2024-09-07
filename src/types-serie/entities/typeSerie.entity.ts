@@ -9,6 +9,6 @@ export class Typeserie {
   type: string;
   @Column({ length: 250 })
   description: string;
-  @OneToMany(() => Series, (series) => series.type)
+  @OneToMany(() => Series, (series) => series.typeSeries)
   series: Series[];
 }

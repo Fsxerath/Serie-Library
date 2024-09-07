@@ -4,7 +4,6 @@ import { Series } from '../entities/series.entity';
 import { Repository } from 'typeorm';
 import { CreateSeriesDto } from '../dtos/createSeries.dto';
 import { UpdateSeriesDto } from '../dtos/updateSeries.dto';
-import { User } from 'src/users/entities/user.entity';
 import { TypeSerieService } from 'src/types-serie/services/type-serie.service';
 
 @Injectable()
@@ -15,14 +14,10 @@ export class SeriesService {
     private readonly typeService: TypeSerieService,
   ) {}
 
-  async getSeriesForUser(user: User): Promise<Series[]> {
+  async getSeriesForUser(userID: string): Promise<Series[]> {
     return await this.seriesRepository.find({
       where: {
-        progress: {
-          user: {
-            id: user.id,
-          },
-        },
+        progress: { user: { id: userID } },
       },
     });
   }
@@ -39,7 +34,10 @@ export class SeriesService {
   async createSeries(series: CreateSeriesDto): Promise<Series> {
     const type = await this.typeService.getOneTypeSerie(series.typeSeries);
     if (!type) throw new NotFoundException('Type not found');
-    return await this.seriesRepository.save(series);
+    return await this.seriesRepository.save({
+      ...series,
+      typeSeries: type,
+    });
   }
   async updateSeries(
     id: string,

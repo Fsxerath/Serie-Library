@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Typeserie } from 'src/types-serie/entities/typeSerie.entity';
 import { Progress } from 'src/progress/entities/progress.entity';
 
@@ -16,8 +22,8 @@ export class Series {
   totalChapters: number;
   @Column({ type: 'text' })
   thumbnail: string;
-  @ManyToOne(() => Progress, (progress) => progress.series)
+  @OneToMany(() => Progress, (progress) => progress.series)
   progress: Progress[];
-  @ManyToOne(() => Typeserie, (typeserie) => typeserie.series)
-  type: Typeserie;
+  @ManyToOne(() => Typeserie, (typeserie) => typeserie.series, { eager: true })
+  typeSeries: Typeserie;
 }

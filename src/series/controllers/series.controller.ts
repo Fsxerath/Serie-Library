@@ -14,6 +14,7 @@ import { UpdateSeriesDto } from '../dtos/updateSeries.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
+import { User } from 'src/users/entities/user.entity';
 
 @Controller('series')
 @UseGuards(AuthGuard())
@@ -26,8 +27,8 @@ export class SeriesController {
     return this.seriesService.getAllSeries();
   }
   @Get('/user')
-  getSeriesForUser(@GetUser() user) {
-    return this.seriesService.getSeriesForUser(user);
+  getSeriesForUser(@GetUser() user: User) {
+    return this.seriesService.getSeriesForUser(user.id);
   }
   @Get('/:id')
   getOneSeries(@Param('id') id: string) {

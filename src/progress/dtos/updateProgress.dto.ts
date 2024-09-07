@@ -16,17 +16,7 @@ export class UpdateProgressDto {
     description: 'Your current chapter in the series',
     example: 1,
   })
-  chapter;
-  @IsOptional()
-  @IsNumber()
-  @IsPositive()
-  @ApiProperty({
-    type: Number,
-    required: true,
-    description: 'Your current season in the series',
-    example: 1,
-  })
-  season;
+  chapter: number;
   @IsOptional()
   @IsString()
   @MinLength(10)
@@ -37,5 +27,5 @@ export class UpdateProgressDto {
     description: 'Your current progress summary in the series',
     example: 'This series is about...',
   })
-  resume;
+  resume: string;
 }
