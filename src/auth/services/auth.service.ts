@@ -22,9 +22,6 @@ export class AuthService {
     if (!isPasswordMatch) throw new UnauthorizedException('wrong password');
 
     return {
-      id: user.id,
-      username: user.username,
-      email: user.email,
       access_token: this.getJwtToken({ id: user.id, email: user.email }),
     };
   }
@@ -43,9 +40,6 @@ export class AuthService {
     userRegister.password = await hash(userRegister.password, 10);
     const saveUser = await this.UserServices.createUser(userRegister);
     return {
-      id: saveUser.id,
-      username: saveUser.username,
-      email: saveUser.email,
       access_token: this.getJwtToken({
         id: saveUser.id,
         email: saveUser.email,
