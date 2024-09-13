@@ -21,7 +21,7 @@ export class Progress {
   dateCreated: Date;
   @UpdateDateColumn()
   dateUpdate: Date;
-  @ManyToOne(() => Series, (series) => series.progress, { eager: true })
+  @ManyToOne(() => Series, (series) => series.progress)
   series: Series;
   @ManyToOne(() => User, (user) => user.progress)
   user: User;
