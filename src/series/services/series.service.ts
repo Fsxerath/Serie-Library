@@ -16,18 +16,32 @@ export class SeriesService {
 
   async getSeriesForUser(userID: string): Promise<Series[]> {
     return await this.seriesRepository.find({
+      select: ['id', 'title', 'thumbnail'],
       where: {
         progress: { user: { id: userID } },
       },
     });
   }
   async getAllSeries(): Promise<Series[]> {
-    return await this.seriesRepository.find();
+    return await this.seriesRepository.find({
+      select: ['id', 'title', 'thumbnail'],
+    });
   }
   async findOneByID(id: string): Promise<Series> {
-    const series = await this.seriesRepository.findOne({
-      where: { id },
-    });
+    const series = await this.seriesRepository
+      .createQueryBuilder('series')
+      .leftJoinAndSelect('series.typeSeries', 'typeSeries')
+      .select([
+        'series.id',
+        'series.title',
+        'series.synopsis',
+        'series.publicationDate',
+        'series.totalChapters',
+        'series.thumbnail',
+        'typeSeries.type',
+      ])
+      .where('series.id = :id', { id })
+      .getOne();
     if (!series) throw new NotFoundException('Series not found');
     return series;
   }

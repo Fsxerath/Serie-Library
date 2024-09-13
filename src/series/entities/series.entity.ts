@@ -24,6 +24,6 @@ export class Series {
   thumbnail: string;
   @OneToMany(() => Progress, (progress) => progress.series)
   progress: Progress[];
-  @ManyToOne(() => Typeserie, (typeserie) => typeserie.series, { eager: true })
+  @ManyToOne(() => Typeserie, (typeserie) => typeserie.series)
   typeSeries: Typeserie;
 }

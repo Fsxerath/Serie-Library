@@ -22,9 +22,13 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 @ApiBearerAuth()
 export class ProgressController {
   constructor(private readonly progress_Services: ProgressService) {}
-  @Get('/:seriesID')
+  @Get()
+  getAllProgress(@GetUser() user: User) {
+    return this.progress_Services.getProgressAllByUser(user);
+  }
+  @Get('/:id_series')
   getProgressByUser(
-    @Param('seriesID') seriesID: string,
+    @Param('id_series') seriesID: string,
     @GetUser() user: User,
   ) {
     return this.progress_Services.getProgressByUser(seriesID, user);

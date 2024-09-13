@@ -26,7 +26,7 @@ export class SeriesController {
   getAllSeries() {
     return this.seriesService.getAllSeries();
   }
-  @Get('/user')
+  @Get('/collection')
   getSeriesForUser(@GetUser() user: User) {
     return this.seriesService.getSeriesForUser(user.id);
   }

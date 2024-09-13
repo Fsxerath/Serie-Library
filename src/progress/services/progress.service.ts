@@ -33,6 +33,17 @@ export class ProgressService {
     return progressFind;
   }
 
+  getProgressAllByUser(user: User): Promise<Progress[]> {
+    return this.progressRepository.find({
+      select: ['id', 'chapter', 'resume', 'dateCreated'],
+      where: {
+        user: {
+          id: user.id,
+        },
+      },
+    });
+  }
+
   async getProgressByUser(seriesID: string, user: User): Promise<Progress[]> {
     return await this.progressRepository.find({
       select: ['id', 'chapter', 'resume', 'dateCreated'],
@@ -93,17 +104,17 @@ export class ProgressService {
     id: string,
     updateProgress: UpdateProgressDto,
     user: User,
-  ): Promise<Progress> {
+  ): Promise<string> {
     const searchProgress = await this.findOneProgress(id, user);
     const updatedProgress = Object.assign(searchProgress, updateProgress);
     const saveProgress = await this.progressRepository.save(updatedProgress);
     if (!saveProgress) throw new Error('Error updating progress');
-    return saveProgress;
+    return `Progress is updated successfully`;
   }
-  async deleteProgress(id: string, user: User): Promise<Progress> {
+  async deleteProgress(id: string, user: User): Promise<string> {
     const progress = await this.findOneProgress(id, user);
     const deleteProgress = await this.progressRepository.remove(progress);
     if (!deleteProgress) throw new Error('Error deleting progress');
-    return deleteProgress;
+    return `Progress is deleted successfully`;
   }
 }
