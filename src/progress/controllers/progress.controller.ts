@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ProgressService } from '../services/progress.service';
@@ -24,14 +25,21 @@ export class ProgressController {
   constructor(private readonly progress_Services: ProgressService) {}
   @Get()
   getAllProgress(@GetUser() user: User) {
-    return this.progress_Services.getProgressAllByUser(user);
+    return this.progress_Services.getAllProgressByUser(user);
   }
-  @Get('/:id_series')
-  getProgressByUser(
+  @Get('series/:id_series')
+  getProgressBySeries(
     @Param('id_series') seriesID: string,
     @GetUser() user: User,
+    @Query('page') page: number,
+    @Query('limit') limit: number,
   ) {
-    return this.progress_Services.getProgressByUser(seriesID, user);
+    return this.progress_Services.getProgressBySeries(
+      seriesID,
+      user,
+      page,
+      limit,
+    );
   }
   @Get('/:id')
   getOneProgress(@Param('id') id: string, @GetUser() user: User) {
@@ -55,5 +63,9 @@ export class ProgressController {
   @Delete('/:id')
   deleteProgress(@Param('id') id: string, @GetUser() user: User) {
     return this.progress_Services.deleteProgress(id, user);
+  }
+  @Delete('/all/:id')
+  deleteAllProgress(@GetUser() user: User, @Param('id') id: string) {
+    return this.progress_Services.deleteAllProgress(user, id);
   }
 }

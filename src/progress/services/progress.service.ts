@@ -33,8 +33,8 @@ export class ProgressService {
     return progressFind;
   }
 
-  getProgressAllByUser(user: User): Promise<Progress[]> {
-    return this.progressRepository.find({
+  async getAllProgressByUser(user: User): Promise<Progress[]> {
+    const allProgress = await this.progressRepository.find({
       select: ['id', 'chapter', 'resume', 'dateCreated'],
       where: {
         user: {
@@ -42,20 +42,41 @@ export class ProgressService {
         },
       },
     });
+    if (allProgress.length === 0)
+      throw new NotFoundException('Progress not found');
+    return allProgress;
   }
 
-  async getProgressByUser(seriesID: string, user: User): Promise<Progress[]> {
-    return await this.progressRepository.find({
-      select: ['id', 'chapter', 'resume', 'dateCreated'],
-      where: {
-        user: {
-          id: user.id,
+  async getProgressBySeries(
+    seriesID: string,
+    user: User,
+    page: number,
+    limit: number,
+  ) {
+    try {
+      const progressBySeries = await this.progressRepository.find({
+        select: {
+          id: true,
+          chapter: true,
+          resume: true,
+          dateCreated: true,
         },
-        series: {
-          id: seriesID,
+        order: { chapter: 'DESC' },
+        skip: page * limit,
+        take: limit,
+        where: {
+          user: {
+            id: user.id,
+          },
+          series: {
+            id: seriesID,
+          },
         },
-      },
-    });
+      });
+      return progressBySeries;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async validateChapterProgress(
@@ -63,6 +84,7 @@ export class ProgressService {
     user: string,
     series: string,
   ): Promise<Progress> {
+    console.log(chapter, user, series);
     const progressFind = await this.progressRepository.findOne({
       where: {
         chapter: chapter,
@@ -87,7 +109,6 @@ export class ProgressService {
       series.id,
     );
     if (isRepeated) throw new BadRequestException('Chapter already exists');
-    console.log('Chapter already exists');
     const created_Progress = await this.progressRepository.save({
       ...createProgressDto,
       user,
@@ -104,17 +125,27 @@ export class ProgressService {
     id: string,
     updateProgress: UpdateProgressDto,
     user: User,
-  ): Promise<string> {
+  ) {
     const searchProgress = await this.findOneProgress(id, user);
     const updatedProgress = Object.assign(searchProgress, updateProgress);
     const saveProgress = await this.progressRepository.save(updatedProgress);
-    if (!saveProgress) throw new Error('Error updating progress');
-    return `Progress is updated successfully`;
+    if (!saveProgress) throw new BadRequestException('Error updating progress');
+    return saveProgress;
   }
   async deleteProgress(id: string, user: User): Promise<string> {
     const progress = await this.findOneProgress(id, user);
     const deleteProgress = await this.progressRepository.remove(progress);
     if (!deleteProgress) throw new Error('Error deleting progress');
     return `Progress is deleted successfully`;
+  }
+  async deleteAllProgress(user: User, seriesID: string) {
+    await this.progressRepository.delete({
+      user: {
+        id: user.id,
+      },
+      series: {
+        id: seriesID,
+      },
+    });
   }
 }
