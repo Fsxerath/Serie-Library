@@ -6,7 +6,6 @@ import {
   Param,
   Patch,
   Post,
-  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ProgressService } from '../services/progress.service';
@@ -16,6 +15,8 @@ import { User } from 'src/users/entities/user.entity';
 import { UpdateProgressDto } from '../dtos/updateProgress.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { PaginationParams } from 'src/shared/decorators/pagination-params.decorator';
+import { Pagination } from 'src/shared/interfaces/pagination.interface';
 
 @Controller('progress')
 @UseGuards(AuthGuard())
@@ -31,14 +32,12 @@ export class ProgressController {
   getProgressBySeries(
     @Param('id_series') seriesID: string,
     @GetUser() user: User,
-    @Query('page') page: number,
-    @Query('limit') limit: number,
+    @PaginationParams() pagination: Pagination,
   ) {
     return this.progress_Services.getProgressBySeries(
       seriesID,
       user,
-      page,
-      limit,
+      pagination,
     );
   }
   @Get('/:id')

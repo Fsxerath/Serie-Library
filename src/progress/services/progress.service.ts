@@ -10,6 +10,8 @@ import { Progress } from '../entities/progress.entity';
 import { Repository } from 'typeorm';
 import { SeriesService } from 'src/series/services/series.service';
 import { UpdateProgressDto } from '../dtos/updateProgress.dto';
+import { Pagination } from 'src/shared/interfaces/pagination.interface';
+import { PaginationResource } from 'src/shared/types/pagination-resource.type';
 
 @Injectable()
 export class ProgressService {
@@ -50,20 +52,14 @@ export class ProgressService {
   async getProgressBySeries(
     seriesID: string,
     user: User,
-    page: number,
-    limit: number,
-  ) {
-    try {
-      const progressBySeries = await this.progressRepository.find({
-        select: {
-          id: true,
-          chapter: true,
-          resume: true,
-          dateCreated: true,
-        },
+    { page, size, limit, offset }: Pagination,
+  ): Promise<PaginationResource<Progress>> {
+    const [progressBySeries, total] =
+      await this.progressRepository.findAndCount({
+        select: ['id', 'chapter', 'resume', 'dateCreated'],
         order: { chapter: 'DESC' },
-        skip: page * limit,
-        take: limit,
+        take: size,
+        skip: offset,
         where: {
           user: {
             id: user.id,
@@ -73,10 +69,12 @@ export class ProgressService {
           },
         },
       });
-      return progressBySeries;
-    } catch (error) {
-      throw error;
-    }
+    return {
+      totalItems: total,
+      items: progressBySeries,
+      page,
+      limit,
+    };
   }
 
   async validateChapterProgress(
