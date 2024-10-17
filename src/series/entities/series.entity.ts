@@ -16,7 +16,7 @@ export class Series {
   title: string;
   @Column({ type: 'text' })
   synopsis: string;
-  @Column({ length: 12 })
+  @Column({ length: 12, default: 'N/A' })
   publicationDate: string;
   @Column({ type: 'int' })
   totalChapters: number;

@@ -17,7 +17,7 @@ export class Progress {
   chapter: number;
   @Column({ type: 'text' })
   resume: string;
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'date' })
   dateCreated: Date;
   @UpdateDateColumn()
   dateUpdate: Date;
