@@ -15,6 +15,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { User } from 'src/users/entities/user.entity';
+import { PaginationParams } from 'src/shared/decorators/pagination-params.decorator';
+import { Pagination } from 'src/shared/interfaces/pagination.interface';
 
 @Controller('series')
 @UseGuards(AuthGuard())
@@ -23,12 +25,18 @@ import { User } from 'src/users/entities/user.entity';
 export class SeriesController {
   constructor(private readonly seriesService: SeriesService) {}
   @Get()
-  getAllSeries() {
-    return this.seriesService.getAllSeries();
+  getAllSeries(
+    @GetUser() user: User,
+    @PaginationParams() pagination: Pagination,
+  ) {
+    return this.seriesService.getAllSeries(user.id, pagination);
   }
   @Get('/collection')
-  getSeriesForUser(@GetUser() user: User) {
-    return this.seriesService.getSeriesForUser(user.id);
+  getSeriesForUser(
+    @GetUser() user: User,
+    @PaginationParams() pagination: Pagination,
+  ) {
+    return this.seriesService.getSeriesForUser(user.id, pagination);
   }
   @Get('/:id')
   getOneSeries(@Param('id') id: string) {

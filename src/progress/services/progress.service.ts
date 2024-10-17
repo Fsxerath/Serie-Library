@@ -82,7 +82,6 @@ export class ProgressService {
     user: string,
     series: string,
   ): Promise<Progress> {
-    console.log(chapter, user, series);
     const progressFind = await this.progressRepository.findOne({
       where: {
         chapter: chapter,
