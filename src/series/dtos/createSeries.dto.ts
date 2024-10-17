@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
   IsUrl,
@@ -35,7 +36,8 @@ export class CreateSeriesDto {
     description: 'date of first publication',
     example: '2002-09-21',
   })
-  publicationDate;
+  @IsOptional()
+  publicationDate: string;
   @IsNotEmpty()
   @IsNumber()
   @IsPositive()

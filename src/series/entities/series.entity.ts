@@ -16,7 +16,7 @@ export class Series {
   title: string;
   @Column({ type: 'text' })
   synopsis: string;
-  @Column({ length: 12 })
+  @Column({ length: 12, default: 'N/A' })
   publicationDate: string;
   @Column({ type: 'int' })
   totalChapters: number;
@@ -24,6 +24,6 @@ export class Series {
   thumbnail: string;
   @OneToMany(() => Progress, (progress) => progress.series)
   progress: Progress[];
-  @ManyToOne(() => Typeserie, (typeserie) => typeserie.series, { eager: true })
+  @ManyToOne(() => Typeserie, (typeserie) => typeserie.series)
   typeSeries: Typeserie;
 }
