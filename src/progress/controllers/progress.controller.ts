@@ -21,7 +21,7 @@ import { Pagination } from 'src/shared/interfaces/pagination.interface';
 @Controller('progress')
 @UseGuards(AuthGuard())
 @ApiTags('progress')
-@ApiBearerAuth()
+@ApiBearerAuth('access-token')
 export class ProgressController {
   constructor(private readonly progress_Services: ProgressService) {}
   @Get()

@@ -6,7 +6,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 @Controller('supplier')
 @UseGuards(AuthGuard())
 @ApiTags('supplier')
-@ApiBearerAuth()
+@ApiBearerAuth('access-token')
 export class SupplierController {
   constructor(private readonly scraperServices: SupplierService) {}
   @Post()

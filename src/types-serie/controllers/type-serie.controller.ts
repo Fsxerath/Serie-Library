@@ -16,7 +16,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 @Controller('typeSeries')
 @UseGuards(AuthGuard())
 @ApiTags('typeSeries')
-@ApiBearerAuth()
+@ApiBearerAuth('access-token')
 export class TypeSerieController {
   constructor(private readonly typeSerieService: TypeSerieService) {}
   @Get()
