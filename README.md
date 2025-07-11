@@ -1,72 +1,52 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## Serie Library
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este proyecto esta dividido en dos repositorios, el [Frontend](https://github.com/Fredy-Angarita/front-serie-library) y el Backend.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Serie Library es un proyecto personal el cual realice principalmente para solucionar uno de los problemas más recurrentes que suelen tener las personas que disfrutan del contenido audiovisual como las series y obras literarias como novelas, el cual radica en que mientras que esperan nuevo contenido de sus historias favoritas olvidan acontecimientos importantes de las mismas. Por ello, cree una aplicación que permite a los usuarios guardar sus series y resúmenes, que le faciliten recordar posteriormente detalles importantes de la trama
 
-## Description
+Este proyecto fue realizado con 
+* [Nest](https://github.com/nestjs/nest)
+* [Docker](https://www.docker.com/).
+* [PostgreSQL](https://www.postgresql.org/).
+* [Puppeteer](https://pptr.dev/)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Requisitos
+Tener instalado:
+* Node
+* Docker
 
-## Installation
+## Instalación
 
+Estando en la raíz del proyecto se debe ejecutar el siguiente comando: 
 ```bash
 $ npm install
 ```
 
-## Running the app
+## Configuración
+
+Una vez realizada la instalación de dependencias, tendrán que crear un archivo llamado `.env` en la raíz del proyecto, copiando el contenido del archivo 
+[.example.env](https://github.com/Fredy-Angarita/Serie-Library/blob/main/.example.env) en el y luego rellenar los campos con la información del archivo 
+[docker-compose.yml](https://github.com/Fredy-Angarita/Serie-Library/blob/main/docker-compose.yml).
+
+Para la clave `SECRET` puede usar cualquier cadena de caracteres. ejemplo `SECRET=soyelsecret`
+
+## Ejecutar
+
+Estando en la raíz del proyecto deberán ejecutar: 
 
 ```bash
-# development
+# Iniciar contenedor docker
+$ docker compose up
+```
+
+```bash
+# Iniciar servidor de Nest
 $ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
-## Test
+## Documentación
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Para acceder a la documentación deberán navegar a `http://localhost:3000/api`.
 
 ## License
 
